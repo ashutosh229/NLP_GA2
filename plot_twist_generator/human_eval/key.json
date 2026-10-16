@@ -1,0 +1,122 @@
+{
+ "S01": {
+  "model": "rnn",
+  "config": "topk40",
+  "prompt_id": "letter",
+  "seed": 1234
+ },
+ "S02": {
+  "model": "lstm",
+  "config": "topk40",
+  "prompt_id": "village",
+  "seed": 1234
+ },
+ "S03": {
+  "model": "lstm",
+  "config": "topk40",
+  "prompt_id": "detective",
+  "seed": 1234
+ },
+ "S04": {
+  "model": "lstm",
+  "config": "temp0.8",
+  "prompt_id": "letter",
+  "seed": 1234
+ },
+ "S05": {
+  "model": "lstm",
+  "config": "topk40",
+  "prompt_id": "robot",
+  "seed": 1234
+ },
+ "S06": {
+  "model": "lstm",
+  "config": "temp0.8",
+  "prompt_id": "robot",
+  "seed": 1234
+ },
+ "S07": {
+  "model": "lstm",
+  "config": "topk40",
+  "prompt_id": "letter",
+  "seed": 1234
+ },
+ "S08": {
+  "model": "lstm",
+  "config": "topk40",
+  "prompt_id": "exam",
+  "seed": 1234
+ },
+ "S09": {
+  "model": "lstm",
+  "config": "temp0.8",
+  "prompt_id": "village",
+  "seed": 1234
+ },
+ "S10": {
+  "model": "rnn",
+  "config": "temp0.8",
+  "prompt_id": "exam",
+  "seed": 1234
+ },
+ "S11": {
+  "model": "rnn",
+  "config": "topk40",
+  "prompt_id": "detective",
+  "seed": 1234
+ },
+ "S12": {
+  "model": "rnn",
+  "config": "topk40",
+  "prompt_id": "robot",
+  "seed": 1234
+ },
+ "S13": {
+  "model": "rnn",
+  "config": "temp0.8",
+  "prompt_id": "letter",
+  "seed": 1234
+ },
+ "S14": {
+  "model": "rnn",
+  "config": "temp0.8",
+  "prompt_id": "detective",
+  "seed": 1234
+ },
+ "S15": {
+  "model": "rnn",
+  "config": "topk40",
+  "prompt_id": "village",
+  "seed": 1234
+ },
+ "S16": {
+  "model": "lstm",
+  "config": "temp0.8",
+  "prompt_id": "exam",
+  "seed": 1234
+ },
+ "S17": {
+  "model": "rnn",
+  "config": "topk40",
+  "prompt_id": "exam",
+  "seed": 1234
+ },
+ "S18": {
+  "model": "rnn",
+  "config": "temp0.8",
+  "prompt_id": "village",
+  "seed": 1234
+ },
+ "S19": {
+  "model": "rnn",
+  "config": "temp0.8",
+  "prompt_id": "robot",
+  "seed": 1234
+ },
+ "S20": {
+  "model": "lstm",
+  "config": "temp0.8",
+  "prompt_id": "detective",
+  "seed": 1234
+ }
+}

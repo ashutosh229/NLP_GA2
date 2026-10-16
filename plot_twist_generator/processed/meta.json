@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "n_train": 20000,
+  "n_val": 1000,
+  "n_test": 1000,
+  "vocab_size": 7856,
+  "min_freq": 3,
+  "max_vocab": 10000,
+  "max_story_tokens": 300,
+  "train_tokens": 3862623,
+  "train_unk_rate": 0.0012841015030459872,
+  "mean_story_len": 193.13115,
+  "tokenisation": "word-level, lower-case"
+}
