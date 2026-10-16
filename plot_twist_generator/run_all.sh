@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Full reproduction (seeds fixed inside each script). ~1-2 h on a single modest GPU.
 set -e
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 pip install -r requirements.txt
 python data_prep.py                       # Part 1  (use --toy for a 1-minute offline smoke test)
 python train.py --cell rnn  --seed 42     # Part 2

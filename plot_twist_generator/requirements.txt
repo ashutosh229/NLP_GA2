@@ -1,6 +1,7 @@
-torch>=2.0
+torch
+torchvision
 datasets>=2.14
 matplotlib
 numpy
-# optional LLM extension only:
+# Optional LLM extension only
 transformers>=4.40
