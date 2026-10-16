@@ -1,0 +1,161 @@
+{
+  "raters": [
+    "rater1",
+    "rater2",
+    "rater3"
+  ],
+  "by_model": {
+    "rnn": {
+      "coherence": {
+        "mean": 1.4,
+        "std": 0.4898979485566356
+      },
+      "grammar": {
+        "mean": 2.466666666666667,
+        "std": 0.6182412330330469
+      },
+      "relevance": {
+        "mean": 1.1,
+        "std": 0.3
+      },
+      "creativity": {
+        "mean": 1,
+        "std": 0.0
+      }
+    },
+    "lstm": {
+      "coherence": {
+        "mean": 1.5,
+        "std": 0.5
+      },
+      "grammar": {
+        "mean": 2.5,
+        "std": 0.5627314338711378
+      },
+      "relevance": {
+        "mean": 1.2,
+        "std": 0.4
+      },
+      "creativity": {
+        "mean": 1.1666666666666667,
+        "std": 0.37267799624996495
+      }
+    }
+  },
+  "by_model_config": {
+    "rnn|topk40": {
+      "coherence": {
+        "mean": 1.3333333333333333,
+        "std": 0.4714045207910317
+      },
+      "grammar": {
+        "mean": 2.2,
+        "std": 0.5416025603090641
+      },
+      "relevance": {
+        "mean": 1.0666666666666667,
+        "std": 0.24944382578492943
+      },
+      "creativity": {
+        "mean": 1,
+        "std": 0.0
+      }
+    },
+    "lstm|topk40": {
+      "coherence": {
+        "mean": 1.3333333333333333,
+        "std": 0.4714045207910317
+      },
+      "grammar": {
+        "mean": 2.3333333333333335,
+        "std": 0.5962847939999439
+      },
+      "relevance": {
+        "mean": 1.1333333333333333,
+        "std": 0.339934634239519
+      },
+      "creativity": {
+        "mean": 1.1333333333333333,
+        "std": 0.339934634239519
+      }
+    },
+    "lstm|temp0.8": {
+      "coherence": {
+        "mean": 1.6666666666666667,
+        "std": 0.4714045207910317
+      },
+      "grammar": {
+        "mean": 2.6666666666666665,
+        "std": 0.4714045207910317
+      },
+      "relevance": {
+        "mean": 1.2666666666666666,
+        "std": 0.4422166387140533
+      },
+      "creativity": {
+        "mean": 1.2,
+        "std": 0.4
+      }
+    },
+    "rnn|temp0.8": {
+      "coherence": {
+        "mean": 1.4666666666666666,
+        "std": 0.49888765156985887
+      },
+      "grammar": {
+        "mean": 2.7333333333333334,
+        "std": 0.5734883511361751
+      },
+      "relevance": {
+        "mean": 1.1333333333333333,
+        "std": 0.339934634239519
+      },
+      "creativity": {
+        "mean": 1,
+        "std": 0.0
+      }
+    }
+  },
+  "by_rater": {
+    "rater1": {
+      "coherence": 1.6,
+      "grammar": 2.25,
+      "relevance": 1.05,
+      "creativity": 1.15
+    },
+    "rater2": {
+      "coherence": 1.6,
+      "grammar": 2.6,
+      "relevance": 1.4,
+      "creativity": 1.1
+    },
+    "rater3": {
+      "coherence": 1.15,
+      "grammar": 2.6,
+      "relevance": 1,
+      "creativity": 1
+    }
+  },
+  "agreement": {
+    "coherence": {
+      "mean_abs_diff": 0.36666666666666664,
+      "exact_agree": 0.6333333333333333,
+      "within_1": 1.0
+    },
+    "grammar": {
+      "mean_abs_diff": 0.36666666666666664,
+      "exact_agree": 0.6333333333333333,
+      "within_1": 1.0
+    },
+    "relevance": {
+      "mean_abs_diff": 0.3,
+      "exact_agree": 0.7,
+      "within_1": 1.0
+    },
+    "creativity": {
+      "mean_abs_diff": 0.1,
+      "exact_agree": 0.9,
+      "within_1": 1.0
+    }
+  }
+}
