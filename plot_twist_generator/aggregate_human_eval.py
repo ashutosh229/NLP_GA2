@@ -13,7 +13,7 @@ def main():
         name = Path(f).stem.replace("ratings_", "")
         R[name] = {}
         for row in csv.DictReader(open(f, encoding="utf-8")):
-            R[name][row["sample_id"]] = {c: int(row[c]) for c in CRIT}
+            R[name][row["sample_id"]] = {c: int(float(row[c])) for c in CRIT}
     raters = list(R)
     out = {
         "raters": raters,
