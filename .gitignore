@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and checkpoints
+.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# PDFs and binary document files (per instructions)
+*.pdf
+
+# Model weights, embeddings, and large dataset files
+*.pt
+*.pth
+*.bin
+*.onnx
+*.h5
+*.ckpt
+*.tar.gz
+*.zip
+data/
+downloads/
+
+# IDE and OS specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
