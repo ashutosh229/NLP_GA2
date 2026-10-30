@@ -1,0 +1,83 @@
+Fine-Tuning RoBERTa for Multi-Class Product Review
+Rating Prediction
+Objective
+
+The objective of this task is to develop and evaluate a high-performance rating prediction model by fine-
+tuning a pre-trained RoBERTa (Robustly Optimized BERT Pretraining Approach) model. The goal is to
+
+perform 5-class rating classification on a large-scale product review dataset, compare its performance
+against a strong recurrent baseline with an attention mechanism, and study how well each model
+respects the ordinal nature of star ratings.
+Dataset
+For this task, use the Amazon Reviews (English) Star Rating Dataset. This is a large-scale dataset
+for 5-class rating classification, where 1 star is "very negative" and 5 stars is "very positive". Each
+sample contains a review title and a review body, which must be concatenated into a single input text.
+Dataset Source: Can be loaded using the Hugging Face datasets library:
+datasets.load_dataset('SetFit/amazon_reviews_multi_en')
+Data Splits: Training Set: 200,000 reviews; Validation Set: 5,000 reviews; Test Set: 5,000 reviews.
+The validation set must be used for model selection and early stopping; the test set must be
+touched only once for the final evaluation.
+Problem Statement
+Implement two rating classification models for the 5-class Amazon dataset:
+1. Baseline RNN Model (without Transformers): Implement a strong baseline using a Bidirectional
+GRU with an additive attention pooling layer. This model should use pre-trained fastText (or GloVe)
+word embeddings as its input layer.
+
+2. RoBERTa-based Classification Model: Implement a classification model by fine-tuning a pre-
+trained RoBERTa model (e.g., roberta-base). Instead of using only the first-token (<s>)
+
+embedding, use mean pooling over all non-padded token embeddings of the last hidden layer,
+followed by a classification head, and fine-tune the entire model end-to-end.
+Compare the performance of both models using Accuracy, Macro F1-Score and Mean Absolute Error
+(MAE) of the predicted star rating, and provide a detailed analysis of the quantitative and qualitative
+differences.
+Implementation Guidelines
+Your implementation should include the following components:
+1. Data Preprocessing
+Baseline: Implement a classic NLP preprocessing pipeline: lowercase and clean the text (HTML
+tags, URLs), tokenize (e.g., using spaCy or NLTK), build a vocabulary with a minimum frequency
+threshold, and load pre-trained fastText/GloVe vectors into an embedding matrix. Handle padding,
+unknown tokens and a fixed maximum sequence length (e.g., 200 tokens).
+RoBERTa: Use the RobertaTokenizerFast from the Hugging Face transformers library. This
+includes handling byte-level BPE tokenization, adding special tokens (<s>, </s>),
+truncation/padding to a maximum length (e.g., 256), and generating the attention_mask. Use
+dynamic padding with a data collator to speed up training.
+2. Model Architecture
+Baseline: Embedding Layer (initialized with fastText/GloVe, frozen for the first epoch then unfrozen)
+-> Bidirectional GRU (2 layers) -> Additive Attention Pooling -> Dropout -> Linear Layer (output dims
+= 5).
+RoBERTa: Load a pre-trained RobertaModel. The classification model should compute the masked
+mean of the last hidden states, pass it through a Dropout layer (p = 0.1 to 0.3) and a final Linear
+Layer (output dims = 5).
+3. Training Setup
+Train the models using Cross-Entropy Loss and an appropriate optimizer.
+Baseline: Use Adam with a standard learning rate (e.g., 1e-3), gradient clipping (max norm 1.0)
+and early stopping on validation Macro F1.
+RoBERTa: Use the AdamW optimizer with a low learning rate (e.g., 1e-5 to 3e-5), weight decay
+(e.g., 0.01), and a learning rate scheduler with 6-10% linear warmup followed by linear decay. Use
+mixed-precision (fp16/bf16) training and gradient accumulation if GPU memory is limited.
+Handle the large dataset efficiently using DataLoader (PyTorch) or tf.data (TensorFlow). Fix random
+seeds and report results as the mean and standard deviation over at least 2 seeds.
+4. Ablation Study (choose any ONE)
+Mean pooling vs. first-token pooling for RoBERTa.
+Standard Cross-Entropy vs. class-weighted Cross-Entropy for either model.
+Maximum sequence length of 128 vs. 256 tokens for RoBERTa.
+5. Evaluation
+Evaluate both models on the test set.
+Quantitative: Report overall Accuracy, Macro F1-Score, per-class F1-Score and MAE. Generate a
+normalized Confusion Matrix for both models and analyze class-specific errors, in particular how
+often each model confuses adjacent ratings (e.g., 4 vs. 5 stars) compared to distant ratings (e.g., 1
+vs. 5 stars).
+Qualitative: Provide at least 5 examples from the test set where the baseline model fails but the
+RoBERTa model succeeds (and at least 2 where the opposite happens, if any). Analyze these
+examples (e.g., negation, sarcasm, mixed sentiment, long reviews, misspellings) to hypothesize
+why the models differ. For the transformer, visualize attention or token-level importance for at least
+one example.
+Expected Deliverables
+Preprocessing and Data Loading notebook/script (must show handling for both classic embeddings
+and RoBERTa tokenization).
+Notebook for Baseline (BiGRU + Attention) Model: Training and Evaluation.
+Notebook for RoBERTa Model: Fine-tuning, Ablation and Evaluation.
+Graphs showing training/validation loss and Macro F1-score trends for both models.
+A concise report (maximum 6 pages) detailing the architecture, training process, ablation result, and
+a comparative analysis of the quantitative and qualitative results.
