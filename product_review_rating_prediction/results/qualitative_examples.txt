@@ -1,0 +1,29 @@
+
+======================================================================
+BiGRU FAILS -- RoBERTa SUCCEEDS
+======================================================================
+
+[1] True=3star  BiGRU=4star  RoBERTa=3star
+Text: Good size desk for sewing with draws for storage of parts and thread, and a draw for storing a sewing machine. Not a bad unit for the price, but the quality is below Ikea and similar type furniture I have assembled. While most parts fit together well, some of the draws did not. Either they fit tight in the desk slides or did not align flush to each
+
+[2] True=3star  BiGRU=2star  RoBERTa=3star
+Text: It was a great kit to put together but one gear is warped and i am finding myself ripping my hair out sanding and adjusting it to try to get it to tick more than a few seconds at a time.
+
+[3] True=2star  BiGRU=1star  RoBERTa=2star
+Text: The story was all over the place. I felt no connection to Evelyn/Eva/Evie, and the ending was anticlimactic. Thank goodness it was a free book.
+
+[4] True=2star  BiGRU=3star  RoBERTa=2star
+Text: I was initially very happy with the 2 bowls I received. I use them as water bowls for my dogs. However after about 4 months, the inside of the bowls are covered with rust spots.
+
+[5] True=4star  BiGRU=3star  RoBERTa=4star
+Text: Really enjoyed the movie, specially AFTER getting past all the really dark, dreary, scary stuff at the beginning. Also the mommy issues... wtf?! DC. All the promotional stuff made me think it was finally a hero kids could watch, and within reason they can, but I do feel misled.. this is a grown up movie in a kids wrapper. Like the kid stuff was an 
+
+======================================================================
+RoBERTa FAILS -- BiGRU SUCCEEDS
+======================================================================
+
+[1] True=4star  BiGRU=4star  RoBERTa=5star
+Text: I got the Phone system on time and in good shape. It was what I ordered and in good shape.
+
+[2] True=3star  BiGRU=3star  RoBERTa=2star
+Text: I’ve been using regular Bar Keepers Friend cleanser to clean my ceramic cooktop for years. After remodeling the kitchen and getting a ceramic cooktop that has a texture (the old one was perfectly smooth), I thought I had better try this product instead. It doesn’t work any better than any other cleaner made specifically for ceramic cooktops. So I’m

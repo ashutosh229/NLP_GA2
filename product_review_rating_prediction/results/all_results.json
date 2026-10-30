@@ -1,0 +1,37 @@
+{
+  "bigru": {
+    "acc_mean": 0.5889,
+    "acc_std": 0.0020999999999999908,
+    "mf1_mean": 0.5881649951107568,
+    "mf1_std": 0.0005701199966188231,
+    "mae_mean": 0.48660000000000003,
+    "mae_std": 0.00020000000000000573,
+    "ordinal_error": {
+      "correct_diff0": 0.591,
+      "adjacent_diff1": 0.3462,
+      "near_miss_diff2": 0.0516,
+      "distant_diff_ge3": 0.0112
+    }
+  },
+  "roberta_main": {
+    "acc_mean": 0.6145,
+    "acc_std": 0.0030999999999999917,
+    "mf1_mean": 0.6121376027874297,
+    "mf1_std": 0.0031249676626225464,
+    "mae_mean": 0.43879999999999997,
+    "mae_std": 0.004399999999999987,
+    "ordinal_error": {
+      "correct_diff0": 0.6176,
+      "adjacent_diff1": 0.3382,
+      "near_miss_diff2": 0.0382,
+      "distant_diff_ge3": 0.006
+    }
+  },
+  "ablation_b_mean128": {
+    "acc": 0.6108,
+    "mf1": 0.6087870688209656,
+    "mae": 0.4404
+  },
+  "bigru_fails_roberta_wins": 547,
+  "roberta_fails_bigru_wins": 414
+}
