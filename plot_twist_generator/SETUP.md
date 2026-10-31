@@ -1,7 +1,7 @@
 # SETUP: Plot-Twist Story Generator
 
 This guide explains how to install, run and reproduce everything in `plot_twist_generator/`.
-For an overview of the system and results, see the [project README](../README.md).
+For an overview of the system and results, see the [project README](../REPORT.md).
 
 All commands below are run from inside the `plot_twist_generator/` directory, because the scripts import
 each other with plain `from common import *` and write to folders next to themselves.
@@ -10,13 +10,13 @@ each other with plain `from common import *` and write to folders next to themse
 
 ## 1. Requirements
 
-| Requirement | Notes |
-|---|---|
-| Python | 3.10 or newer recommended |
-| OS | Linux, macOS or Windows (Windows users: see the encoding note in Troubleshooting) |
-| GPU | Optional but strongly recommended. A single modest CUDA GPU trains both models in about 40 minutes total |
-| Disk | About 1 GB for the TinyStories download and Hugging Face cache; checkpoints are about 30 MB each |
-| Internet | Needed once, to download TinyStories (and SmolLM2 if you run the optional LLM step) |
+| Requirement | Notes                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------- |
+| Python      | 3.10 or newer recommended                                                                                |
+| OS          | Linux, macOS or Windows (Windows users: see the encoding note in Troubleshooting)                        |
+| GPU         | Optional but strongly recommended. A single modest CUDA GPU trains both models in about 40 minutes total |
+| Disk        | About 1 GB for the TinyStories download and Hugging Face cache; checkpoints are about 30 MB each         |
+| Internet    | Needed once, to download TinyStories (and SmolLM2 if you run the optional LLM step)                      |
 
 Python packages (`requirements.txt`): `torch`, `torchvision`, `datasets>=2.14`, `matplotlib`, `numpy`,
 and `transformers>=4.40` (only for the optional LLM extension).
@@ -78,12 +78,12 @@ python data_prep.py
 Downloads `roneneldan/TinyStories`, samples 20,000 train and 2,000 held-out stories, cleans, de-duplicates, tokenises,
 builds the vocabulary, and writes to `processed/`:
 
-| File | Content |
-|---|---|
-| `vocab.json` | 7,856 tokens (4 special + words with frequency of at least 3) |
-| `train.json`, `val.json`, `test.json` | stories as lists of token ids (`<bos>` ... `<eos>`) |
-| `test_texts.json` | raw text of test stories |
-| `meta.json` | dataset statistics (sizes, UNK rate, mean length, seed) |
+| File                                  | Content                                                       |
+| ------------------------------------- | ------------------------------------------------------------- |
+| `vocab.json`                          | 7,856 tokens (4 special + words with frequency of at least 3) |
+| `train.json`, `val.json`, `test.json` | stories as lists of token ids (`<bos>` ... `<eos>`)           |
+| `test_texts.json`                     | raw text of test stories                                      |
+| `meta.json`                           | dataset statistics (sizes, UNK rate, mean length, seed)       |
 
 Useful options: `--n_train`, `--n_val`, `--n_test`, `--min_freq`, `--max_vocab`, `--min_story_tokens`,
 `--max_story_tokens`, `--seed`, `--toy`.
@@ -110,9 +110,9 @@ python generate.py                     # defaults: --n_samples 3 --max_new 200 -
 
 Produces, in `results/`:
 
-| File | Content |
-|---|---|
-| `generations_part3.json`, `generated_stories_part3.md` | 5 theme prompts × 2 models × 6 decoding configs (decoding-strategy study) |
+| File                                                   | Content                                                                       |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| `generations_part3.json`, `generated_stories_part3.md` | 5 theme prompts × 2 models × 6 decoding configs (decoding-strategy study)     |
 | `generations_part4.json`, `generated_stories_part4.md` | 5 plot-twist prompts × 2 models × 2 configs (`temp0.8`, `topk40`) × 2 samples |
 
 The Markdown files contain a `**Commentary:**` placeholder after every sample, where you write your own analysis.
@@ -182,18 +182,18 @@ and saves them with metadata (checkpoint, template, decoding, precision, hardwar
 
 ## 5. Output map
 
-| Path | Created by | Description |
-|---|---|---|
-| `processed/` | `data_prep.py` | vocabulary, tokenised splits, dataset metadata |
-| `checkpoints/{rnn,lstm}.pt` | `train.py` | best-validation weights plus model config |
-| `results/history_{rnn,lstm}.json` | `train.py` | training curves, timing, val/test perplexity |
-| `results/generations_part{3,4}.json` | `generate.py` | all samples with prompt, seed, tokens and EOS flag |
-| `results/generated_stories_part{3,4}.md` | `generate.py` | readable versions with commentary placeholders |
-| `results/gen_metrics.json` | `evaluate_generation.py` | quantitative generation metrics |
-| `results/llm_part4.json`, `llm_metadata.json` | `llm_extension.py` | LLM baseline samples and settings |
-| `human_eval/` | `make_human_eval.py` | blinded sheet, key, instructions, rater CSVs |
-| `results/human_eval_summary.json` | `aggregate_human_eval.py` | human-evaluation statistics |
-| `results/tables.md`, `results/loss_curves.png` | `make_report_tables.py` | report-ready tables and figure |
+| Path                                           | Created by                | Description                                        |
+| ---------------------------------------------- | ------------------------- | -------------------------------------------------- |
+| `processed/`                                   | `data_prep.py`            | vocabulary, tokenised splits, dataset metadata     |
+| `checkpoints/{rnn,lstm}.pt`                    | `train.py`                | best-validation weights plus model config          |
+| `results/history_{rnn,lstm}.json`              | `train.py`                | training curves, timing, val/test perplexity       |
+| `results/generations_part{3,4}.json`           | `generate.py`             | all samples with prompt, seed, tokens and EOS flag |
+| `results/generated_stories_part{3,4}.md`       | `generate.py`             | readable versions with commentary placeholders     |
+| `results/gen_metrics.json`                     | `evaluate_generation.py`  | quantitative generation metrics                    |
+| `results/llm_part4.json`, `llm_metadata.json`  | `llm_extension.py`        | LLM baseline samples and settings                  |
+| `human_eval/`                                  | `make_human_eval.py`      | blinded sheet, key, instructions, rater CSVs       |
+| `results/human_eval_summary.json`              | `aggregate_human_eval.py` | human-evaluation statistics                        |
+| `results/tables.md`, `results/loss_curves.png` | `make_report_tables.py`   | report-ready tables and figure                     |
 
 ## 6. Reproducibility
 
@@ -205,19 +205,19 @@ and saves them with metadata (checkpoint, template, decoding, precision, hardwar
 
 ## 7. Troubleshooting
 
-| Problem | Fix |
-|---|---|
-| `ModuleNotFoundError: common` or files written in the wrong place | Run scripts from inside `plot_twist_generator/` |
-| `FileNotFoundError: processed/vocab.json` or `train.json` | Run `data_prep.py` first |
-| `FileNotFoundError: checkpoints/rnn.pt` | Run `train.py --cell rnn` and `--cell lstm` before `generate.py` / `evaluate_generation.py` |
-| `no human_eval/ratings_rater*.csv files found` | Create rating files as described in section 4.5 before running `aggregate_human_eval.py` |
-| CUDA out of memory | Lower `--bs` (for example 32) or `--hid`; or train on CPU (`CUDA_VISIBLE_DEVICES=""`) |
-| Training is very slow | You are on CPU. Use a GPU, or reduce `--n_train` in `data_prep.py` and `--epochs` in `train.py` |
-| Dataset download fails or is slow | Check your connection; `datasets` caches in `~/.cache/huggingface`. Use `--toy` to test offline |
+| Problem                                                                                     | Fix                                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ModuleNotFoundError: common` or files written in the wrong place                           | Run scripts from inside `plot_twist_generator/`                                                                                                                                                                                        |
+| `FileNotFoundError: processed/vocab.json` or `train.json`                                   | Run `data_prep.py` first                                                                                                                                                                                                               |
+| `FileNotFoundError: checkpoints/rnn.pt`                                                     | Run `train.py --cell rnn` and `--cell lstm` before `generate.py` / `evaluate_generation.py`                                                                                                                                            |
+| `no human_eval/ratings_rater*.csv files found`                                              | Create rating files as described in section 4.5 before running `aggregate_human_eval.py`                                                                                                                                               |
+| CUDA out of memory                                                                          | Lower `--bs` (for example 32) or `--hid`; or train on CPU (`CUDA_VISIBLE_DEVICES=""`)                                                                                                                                                  |
+| Training is very slow                                                                       | You are on CPU. Use a GPU, or reduce `--n_train` in `data_prep.py` and `--epochs` in `train.py`                                                                                                                                        |
+| Dataset download fails or is slow                                                           | Check your connection; `datasets` caches in `~/.cache/huggingface`. Use `--toy` to test offline                                                                                                                                        |
 | `UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb1` when reading `results/tables.md` | On Windows, `make_report_tables.py` writes the "±" symbol with the system code page. Change its last write to `(RES / "tables.md").write_text("\n".join(md), encoding="utf-8")` and re-run. On Windows you can also set `PYTHONUTF8=1` |
-| Windows: garbled quotes in rater CSVs | Open and save CSVs as UTF-8 (the scripts read them as UTF-8) |
-| `torch.load` warnings about `weights_only` | Safe to ignore here; checkpoints contain only a state dict and a plain config dict |
-| LLM step cannot download the model | Check network access to Hugging Face, or pass a locally downloaded model path via `--ckpt` |
+| Windows: garbled quotes in rater CSVs                                                       | Open and save CSVs as UTF-8 (the scripts read them as UTF-8)                                                                                                                                                                           |
+| `torch.load` warnings about `weights_only`                                                  | Safe to ignore here; checkpoints contain only a state dict and a plain config dict                                                                                                                                                     |
+| LLM step cannot download the model                                                          | Check network access to Hugging Face, or pass a locally downloaded model path via `--ckpt`                                                                                                                                             |
 
 ## 8. Notes on interpreting outputs
 
