@@ -146,15 +146,8 @@ pip install -r requirements.txt
 python data_prep.py && python train.py --cell rnn && python train.py --cell lstm && python generate.py
 ```
 
-Full, step-by-step instructions (GPU/CPU installs, smoke test, human-evaluation workflow, troubleshooting) are in
-[`plot_twist_generator/SETUP.md`](plot_twist_generator/SETUP.md).
-
 ## 8. Reproducibility
 
 Seeds are fixed in every script (data sampling 42, training 42, generation 1234, evaluation 2024, human-eval shuffle 7).
 Each generated sample records its seed. Exact numbers can still vary slightly across hardware and PyTorch versions
 (especially on GPU).
-
-## 9. License
-
-Released under the MIT License. See [`LICENSE`](LICENSE). Copyright (c) 2026 Ashutosh Kumar Jha.
