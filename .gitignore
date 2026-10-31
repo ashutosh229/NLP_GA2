@@ -18,7 +18,7 @@ env.bak/
 venv.bak/
 
 # PDFs and binary document files (per instructions)
-*.pdf
+
 
 # Model weights, embeddings, and large dataset files
 *.pt
