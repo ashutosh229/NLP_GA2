@@ -1,7 +1,6 @@
 # SETUP: Plot-Twist Story Generator
 
 This guide explains how to install, run and reproduce everything in `plot_twist_generator/`.
-For an overview of the system and results, see the [project README](../REPORT.md).
 
 All commands below are run from inside the `plot_twist_generator/` directory, because the scripts import
 each other with plain `from common import *` and write to folders next to themselves.

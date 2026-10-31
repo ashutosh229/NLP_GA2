@@ -8,9 +8,6 @@ opening that sets up a surprising situation and continue it sensibly?
 The project covers the full pipeline: data preparation, model training, decoding-strategy comparison, quantitative
 generation metrics, a blinded human evaluation, and an optional pre-trained LLM baseline.
 
-> **Setup and run instructions:** see [`plot_twist_generator/SETUP.md`](plot_twist_generator/SETUP.md).
-> **Written report:** `plot_twist_generator/REPORT.md`.
-
 ---
 
 ## 1. What the system does
@@ -22,7 +19,7 @@ generation metrics, a blinded human evaluation, and an optional pre-trained LLM 
 4. **Runs a plot-twist challenge** on five hand-written prompts (exam, robot, detective, village, letter).
 5. **Evaluates** generations quantitatively (diversity, repetition, length and termination behaviour, UNK rate) and
    with a **blinded 3-rater human evaluation** (coherence, grammar, relevance, creativity).
-6. *(Optional)* Generates the same plot-twist continuations with a small instruction-tuned LLM
+6. _(Optional)_ Generates the same plot-twist continuations with a small instruction-tuned LLM
    (`HuggingFaceTB/SmolLM2-360M-Instruct`) as a reference point, and blinds them into the human evaluation.
 
 ## 2. Pipeline overview
@@ -43,18 +40,18 @@ llm_extension.py (opt.) ──► results/llm_part4.json + llm_metadata.json
 
 ## 3. Model and data details
 
-| Item | Value |
-|---|---|
-| Tokenisation | word-level, lower-cased; regex keeps words, contractions and basic punctuation |
-| Special tokens | `<pad>`, `<unk>`, `<bos>`, `<eos>` |
-| Vocabulary | 7,856 tokens (min frequency 3, cap 10,000) |
-| Stories | 20,000 train / 1,000 val / 1,000 test (de-duplicated; test and val never overlap train) |
-| Story length | 30 to 300 tokens (longer stories truncated, no `<eos>` added when truncated); mean 193.1 |
-| Train tokens / UNK rate | 3,862,623 / 0.128% |
-| Architecture | Embedding (256) → 1-layer RNN or LSTM (hidden 512) → Dropout (0.3) → Linear to vocab |
-| Parameters | RNN 6,435,504; LSTM 7,618,224 |
-| Optimiser | Adam, lr 2e-3, `ReduceLROnPlateau` (factor 0.5, patience 1), grad-clip 1.0 |
-| Training | batch 64, 128-token chunks, up to 20 epochs, early stopping (patience 3), seed 42 |
+| Item                    | Value                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
+| Tokenisation            | word-level, lower-cased; regex keeps words, contractions and basic punctuation           |
+| Special tokens          | `<pad>`, `<unk>`, `<bos>`, `<eos>`                                                       |
+| Vocabulary              | 7,856 tokens (min frequency 3, cap 10,000)                                               |
+| Stories                 | 20,000 train / 1,000 val / 1,000 test (de-duplicated; test and val never overlap train)  |
+| Story length            | 30 to 300 tokens (longer stories truncated, no `<eos>` added when truncated); mean 193.1 |
+| Train tokens / UNK rate | 3,862,623 / 0.128%                                                                       |
+| Architecture            | Embedding (256) → 1-layer RNN or LSTM (hidden 512) → Dropout (0.3) → Linear to vocab     |
+| Parameters              | RNN 6,435,504; LSTM 7,618,224                                                            |
+| Optimiser               | Adam, lr 2e-3, `ReduceLROnPlateau` (factor 0.5, patience 1), grad-clip 1.0               |
+| Training                | batch 64, 128-token chunks, up to 20 epochs, early stopping (patience 3), seed 42        |
 
 **Decoding configurations** (`prompts.py`): `greedy`, `temp0.5`, `temp0.8`, `temp1.2`, `topk10`, `topk40`.
 Generation is seeded, so every output is reproducible from its recorded seed. `<pad>` and `<bos>` are never sampled.
@@ -63,10 +60,10 @@ Generation is seeded, so every output is reproducible from its recorded seed. `<
 
 ### Language-model quality
 
-| Model | Params | Epochs | Train time | Val PPL | Test PPL |
-|---|---|---|---|---|---|
-| Vanilla RNN | 6.44 M | 20 | 16.9 min | 18.15 | 18.62 |
-| LSTM | 7.62 M | 20 | 22.4 min | 12.03 | 12.25 |
+| Model       | Params | Epochs | Train time | Val PPL | Test PPL |
+| ----------- | ------ | ------ | ---------- | ------- | -------- |
+| Vanilla RNN | 6.44 M | 20     | 16.9 min   | 18.15   | 18.62    |
+| LSTM        | 7.62 M | 20     | 22.4 min   | 12.03   | 12.25    |
 
 The LSTM reaches about **34% lower test perplexity** than the RNN. Both models used all 20 epochs; the LSTM's
 validation loss was still falling slowly, so more epochs would likely help it further.
@@ -76,25 +73,25 @@ validation loss was still falling slowly, so more epochs would likely help it fu
 Distinct-n is computed over the pooled set of generations. Rep-3 is the mean fraction of repeated trigrams per story.
 
 | Model | Decoding | Distinct-1 | Distinct-2 | Rep-3 | Avg len | Overlong | UNK rate |
-|---|---|---|---|---|---|---|---|
-| RNN | greedy | 0.009 | 0.023 | 0.488 | 143.1 | 57.0% | 0.00% |
-| RNN | temp 0.8 | 0.057 | 0.286 | 0.022 | 136.7 | 35.0% | 0.06% |
-| RNN | temp 1.2 | 0.099 | 0.554 | 0.003 | 132.2 | 28.5% | 0.17% |
-| RNN | top-k 40 | 0.055 | 0.315 | 0.013 | 129.7 | 31.5% | 0.05% |
-| LSTM | greedy | 0.021 | 0.081 | 0.359 | 153.0 | 34.0% | 0.00% |
-| LSTM | temp 0.8 | 0.055 | 0.276 | 0.041 | 160.6 | 34.5% | 0.06% |
-| LSTM | temp 1.2 | 0.089 | 0.507 | 0.006 | 163.1 | 38.0% | 0.24% |
-| LSTM | top-k 40 | 0.056 | 0.315 | 0.022 | 166.9 | 41.5% | 0.09% |
+| ----- | -------- | ---------- | ---------- | ----- | ------- | -------- | -------- |
+| RNN   | greedy   | 0.009      | 0.023      | 0.488 | 143.1   | 57.0%    | 0.00%    |
+| RNN   | temp 0.8 | 0.057      | 0.286      | 0.022 | 136.7   | 35.0%    | 0.06%    |
+| RNN   | temp 1.2 | 0.099      | 0.554      | 0.003 | 132.2   | 28.5%    | 0.17%    |
+| RNN   | top-k 40 | 0.055      | 0.315      | 0.013 | 129.7   | 31.5%    | 0.05%    |
+| LSTM  | greedy   | 0.021      | 0.081      | 0.359 | 153.0   | 34.0%    | 0.00%    |
+| LSTM  | temp 0.8 | 0.055      | 0.276      | 0.041 | 160.6   | 34.5%    | 0.06%    |
+| LSTM  | temp 1.2 | 0.089      | 0.507      | 0.006 | 163.1   | 38.0%    | 0.24%    |
+| LSTM  | top-k 40 | 0.056      | 0.315      | 0.022 | 166.9   | 41.5%    | 0.09%    |
 
 All six configurations per model are in `plot_twist_generator/results/gen_metrics.json`.
 "Overlong" means no `<eos>` was produced within the 200-token budget.
 
 ### Blinded human evaluation (3 raters, 20 samples, 1 to 5 scale)
 
-| System | Coherence | Grammar | Relevance | Creativity |
-|---|---|---|---|---|
+| System      | Coherence   | Grammar     | Relevance   | Creativity  |
+| ----------- | ----------- | ----------- | ----------- | ----------- |
 | Vanilla RNN | 1.40 ± 0.49 | 2.47 ± 0.62 | 1.10 ± 0.30 | 1.00 ± 0.00 |
-| LSTM | 1.50 ± 0.50 | 2.50 ± 0.56 | 1.20 ± 0.40 | 1.17 ± 0.37 |
+| LSTM        | 1.50 ± 0.50 | 2.50 ± 0.56 | 1.20 ± 0.40 | 1.17 ± 0.37 |
 
 Inter-rater agreement is high within ±1 point (100% on every criterion); exact agreement ranges from 63% (coherence, grammar)
 to 90% (creativity).
